@@ -4,7 +4,7 @@ Using Python to web scrape the price of an Amazon item and compare it against a 
 
 - Requires Python 3.6 (as the syntax used to format strings was introduced in Python 3.6)
 
-- Requires the python requests library https://anaconda.org/anaconda/requests
+- Requires the Python requests library https://anaconda.org/anaconda/requests
 
 - Requires the BeautifulSoup4 package https://anaconda.org/anaconda/beautifulsoup4
 
