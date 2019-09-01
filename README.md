@@ -2,6 +2,8 @@
 
 Using Python to web scrape the price of an Amazon item and compare it against a threshold price. If the Amazon price is less than the threshold price, an email alert is sent.
 
+At the moment it only works for Amazon items that don't have multiple variants.
+
 - Requires Python 3.6 (as the syntax used to format strings was introduced in Python 3.6)
 
 - Requires the Python requests library https://anaconda.org/anaconda/requests
