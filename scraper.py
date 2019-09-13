@@ -4,8 +4,8 @@ import smtplib
 import time
 
 # URL of the Amazon item you want to track
-URL = 'https://www.amazon.co.uk/Sony-ILCE6300M-Compact-SEL18135-F3-5-5-6/dp/B07C14ZH4B' 
-#'https://www.amazon.co.uk/Sony-ILCE6300M-Compact-SEL18135-F3-5-5-6/dp/B07C14ZH4B/ref=sr_1_1_sspa?keywords=sony+alpha+e+mount&qid=1567273035&s=gateway&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyRjhTV0RITTVRNDFBJmVuY3J5cHRlZElkPUEwNjc0NDAwMUhUOTA2UzcxWjNQVyZlbmNyeXB0ZWRBZElkPUEwNDMzNjY1MkdURFNGWkozUU9BTSZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU='
+URL = 'https://www.amazon.co.uk/Sony-ILCE6300M-Compact-SEL18135-F3-5-5-6/dp/B01BMAIEFE?th=1' 
+#'https://www.amazon.co.uk/Sony-ILCE6300M-Compact-SEL18135-F3-5-5-6/dp/B07C14ZH4B'
 
 # Simply Google search 'my user agent'
 headers = {
@@ -15,17 +15,27 @@ def check_price():
 	page = requests.get(URL, headers=headers)
 
 	soup1 = BeautifulSoup(page.content, "html.parser")
-	soup = BeautifulSoup(soup1.prettify(), 'html.parser')
+	soup = BeautifulSoup(soup1.prettify(), "html.parser")
 
 	title = soup.find(id="productTitle").get_text()
 	price = soup.find(id="priceblock_ourprice").get_text()
-	converted_price = float(price.strip().replace(',','')[1:-1])
+
+
+	#if the currency symbol is at the end
+	if price.strip()[0].isdigit():
+		converted_price = float(price.strip().replace(',','')[0:-1])
+		
+	#if the currency symbol is at the beginning
+	else:
+		converted_price = float(price.strip().replace(',','')[1:])
+
 
 	#define the max price you're willing to pay
-	threshold = 400
+	threshold = 100
 
 	if (converted_price < threshold):
 		send_email()
+
 
 	print(converted_price)
 	print(title.strip())
